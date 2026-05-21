@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+
+  frontend:
+    image: node:22
+
+    container_name: solid-frontend
+
+    working_dir: /app
+
+    volumes:
+      - ./:/app
+
+    tty: true
+
+    stdin_open: true
+
+    command: >
+      sh -c "
+        npm install -g sass &&
+        sass --watch ./resources/sass:./public/css
+      "
+
+  backend:
+    image: php:8.3-apache
+
+    container_name: solid-backend
+
+    working_dir: /var/www/html
+
+    volumes:
+      - ./:/var/www/html
+
+    ports:
+      - '8000:80'
+
+    tty: true
+
+    stdin_open: true
